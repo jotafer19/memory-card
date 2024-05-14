@@ -1,15 +1,15 @@
 import '../styles/Card.css';
 
-export default function Card({ pokemon }) {
+export default function Card({ pokemon, onClick }) {
     return(
-        <div className="card">
+        <button className="card" onClick={onClick} data-id={pokemon.id} >
             <div className="card-image">
-                <img src={pokemon.imageURL} alt={pokemon.name + "sprite"} />
+                <img src={pokemon.imageURL} alt={editName(pokemon.name) + " " + "sprite"} />
             </div>
             <div className="card-title">
                 {editName(pokemon.name)}
             </div>
-        </div>
+        </button>
     )
 }
 

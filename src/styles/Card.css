@@ -1,14 +1,19 @@
 .card {
-    width: 120px;
+    width: 140px;
     height: 200px;
     padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    background-color: #a7a7a774;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
     align-items: center;
-    border: 1px solid black;
+    gap: 1rem;
+    border: none;
     border-radius: 1rem;
     cursor: pointer;
+}
+.card:focus {
+    outline: none;
 }
 
 .card-title {

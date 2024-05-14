@@ -24,6 +24,6 @@ export default async function fetchPokemon() {
       imageURL: pokemon.sprites.front_default,
     });
   });
-  console.log(allPokemon)
+  console.log("hey")
   return allPokemon;
 }
