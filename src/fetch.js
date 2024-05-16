@@ -1,8 +1,8 @@
-export default async function fetchPokemon() {
+export default async function fetchPokemon(pokemonNumber) {
   const allIDs = [];
   const allPokemon = [];
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < pokemonNumber; i++) {
     let currentID = Math.floor(Math.random() * 1025) + 1;
 
     while (allIDs.filter((id) => id === currentID).length > 0) {
@@ -11,7 +11,7 @@ export default async function fetchPokemon() {
 
     allIDs.push(currentID);
   }
-
+  
   const responses = await Promise.all(
     allIDs.map((id) => fetch("https://pokeapi.co/api/v2/pokemon/" + id)),
   );
@@ -24,6 +24,6 @@ export default async function fetchPokemon() {
       imageURL: pokemon.sprites.front_default,
     });
   });
-  console.log("hey")
+  
   return allPokemon;
 }

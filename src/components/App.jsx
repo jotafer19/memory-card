@@ -1,68 +1,51 @@
 import "../styles/App.css";
 import fetchPokemon from "../fetch";
 import { useEffect, useState } from "react";
-import Card from "./Card";
-import CardsContainer from "./Cards-Container";
-import shuffle from "../shuffle-cards"
+import HomeScreen from "./Home-Screen";
+import LoadingScreen from "./Loading-Screen";
+import GameScreen from "./Game-Screen";
 
 function App() {
-  const [pokemonList, setPokemonList] = useState([]);
-  const [pokemonClicked, setPokemonClicked] = useState([]);
-  const [displayedCards, setDisplayedCards] = useState([])
-  const [score, setScore] = useState(0)
-  const [isGameOver, setIsGameOver] = useState(false)
-  
-  function handleDisplayedCards() {
-    shuffle(pokemonList)
-    const availableCards = pokemonList.filter(pokemon => !pokemonClicked.includes(pokemon.id));
-    const selectedCards = [];
-    while (selectedCards.length < 5) {
-      const randomCard = pokemonList[Math.floor(Math.random() * pokemonList.length)];
-      if (!selectedCards.includes(randomCard)) {
-        selectedCards.push(randomCard);
-      }
-    }
-    if (!selectedCards.some(pokemon => availableCards.includes(pokemon))) {
-      const randomIndex = Math.floor(Math.random() * selectedCards.length)
-      selectedCards[randomIndex] = availableCards[Math.floor(Math.random() * availableCards.length)]
-    }
+  const [pokemonData, setPokemonData] = useState(null);
+  const [gameStatus, setGameStatus] = useState("home")
+  const [isLoading, setIsLoading] = useState(false);
+  const [goalScore, setGoalScore] = useState(null);
 
-    return selectedCards;
-  }
-
-  function handleCardClick(event) {
-    const cardID = Number(event.target.closest(".card").dataset.id);
-    if (!isGameOver) {
-      if (pokemonClicked.filter(id => id === cardID).length > 0) {
-        console.log("Already clicked")
-        setIsGameOver(!isGameOver)
-      } else {
-        setPokemonClicked([ ...pokemonClicked, cardID ]);
-        setDisplayedCards(handleDisplayedCards())
-        setScore(lastScore => lastScore + 1);
-      }
-    }
-  }
-  
-  useEffect(() => {
-    async function getPokemon() {
-      try {
-        const pokemonData = await fetchPokemon();
-        setPokemonList(pokemonData);
-        setDisplayedCards(pokemonData.slice(0, 5))
-      } catch (error) {
-        console.error('Error fetching:', error)
-      }
-    }
-    getPokemon()
+  async function handleGameStart(event) {
+    const difficultyMode = event.target.value;
+    const pokemonNumber = difficultyMode === "easy" ? 5 : difficultyMode === "medium" ? 7 : 10;
     
-  }, [])
- 
+    setIsLoading(true);
+    setGoalScore(pokemonNumber)
+
+    try {
+      const data = await fetchPokemon(pokemonNumber);
+      setPokemonData(data);
+      await sleep(4000)
+    } catch(error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  function sleep(timeInMS) {
+    return new Promise(resolve => setTimeout(resolve, timeInMS));
+  }
+
   return (
-    <CardsContainer>
-      {score}
-      {displayedCards.map(pokemon => <Card pokemon={pokemon} key={pokemon.id} onClick={handleCardClick} />)}
-    </CardsContainer>
+    <>
+    {isLoading ? (
+      <LoadingScreen />
+    ) : gameStatus === "home" ? (
+      <HomeScreen handleGameStart={(event) => {
+        handleGameStart(event);
+        setGameStatus("game");
+      }} />
+    ) : gameStatus === "game" ? (
+      <GameScreen pokemonData={pokemonData} goalScore={goalScore} />
+    ) : null}
+    </>
   )
 }
 
