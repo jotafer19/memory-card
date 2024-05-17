@@ -22,6 +22,7 @@ export default async function fetchPokemon(goalScore) {
       name: pokemon.name,
       id: pokemon.id,
       imageURL: pokemon.sprites.front_default,
+      isClicked: false,
     });
   });
 

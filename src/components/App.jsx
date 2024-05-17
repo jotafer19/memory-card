@@ -37,6 +37,10 @@ function App() {
   function sleep(timeInMS) {
     return new Promise((resolve) => setTimeout(resolve, timeInMS));
   }
+
+  function handleGoHome() {
+    setGameStatus("home")
+  }
   
   return (
     <>
@@ -47,7 +51,7 @@ function App() {
           handleGameStart={handleGameStart}
         />
       ) : gameStatus === "game" ? (
-        <GameScreen pokemonData={pokemonData} />
+        <GameScreen pokemonData={pokemonData} playAgain={() => handleGameSetUp(difficultyMode)} handleGoHome={handleGoHome} />
       ) : null}
     </>
   );
