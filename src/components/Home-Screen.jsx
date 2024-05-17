@@ -1,14 +1,20 @@
-import '../styles/Home-Screen.css'
+import "../styles/Home-Screen.css";
 
 export default function HomeScreen({ handleGameStart }) {
-    return (
-        <div className="home screen">
-            <h1 className="title">Memory Game</h1>
-            <div className="difficulty-selector">
-                <button value="easy" onClick={handleGameStart}>Easy</button>
-                <button value="medium" onClick={handleGameStart}>Medium</button>
-                <button value="hard" onClick={handleGameStart}>Hard</button>
-            </div>
-        </div>
-    )
+  return (
+    <div className="home screen">
+      <h1 className="title">Memory Game</h1>
+      <div className="difficulty-selector">
+        <button data-mode="easy" onClick={handleGameStart}>
+          Easy
+        </button>
+        <button data-mode="medium" onClick={handleGameStart}>
+          Medium
+        </button>
+        <button data-mode="hard" onClick={handleGameStart}>
+          Hard
+        </button>
+      </div>
+    </div>
+  );
 }

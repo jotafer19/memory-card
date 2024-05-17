@@ -7,46 +7,50 @@ import GameScreen from "./Game-Screen";
 
 function App() {
   const [pokemonData, setPokemonData] = useState(null);
-  const [gameStatus, setGameStatus] = useState("home")
+  const [gameStatus, setGameStatus] = useState("home");
   const [isLoading, setIsLoading] = useState(false);
-  const [goalScore, setGoalScore] = useState(null);
+  const [difficultyMode, setDifficultyMode] = useState(null);
 
-  async function handleGameStart(event) {
-    const difficultyMode = event.target.value;
-    const pokemonNumber = difficultyMode === "easy" ? 5 : difficultyMode === "medium" ? 7 : 10;
+  function handleGameStart(event) {
+    const mode = event.target.dataset.mode;
+    setDifficultyMode(mode)
+    handleGameSetUp(mode)
+  }
+
+  async function handleGameSetUp(mode) {
+    const goalScore = mode === "easy" ? 5 : mode === "medium" ? 7 : 10;
     
     setIsLoading(true);
-    setGoalScore(pokemonNumber)
 
     try {
-      const data = await fetchPokemon(pokemonNumber);
+      const data = await fetchPokemon(goalScore);
       setPokemonData(data);
-      await sleep(4000)
-    } catch(error) {
-      console.log(error);
+      await sleep(4000);
+    } catch (error) {
+      console.error("Failed to fetch Pokémon data:", error);
     } finally {
       setIsLoading(false);
+      setGameStatus("game")
     }
   }
 
   function sleep(timeInMS) {
-    return new Promise(resolve => setTimeout(resolve, timeInMS));
+    return new Promise((resolve) => setTimeout(resolve, timeInMS));
   }
-
+  
   return (
     <>
-    {isLoading ? (
-      <LoadingScreen />
-    ) : gameStatus === "home" ? (
-      <HomeScreen handleGameStart={(event) => {
-        handleGameStart(event);
-        setGameStatus("game");
-      }} />
-    ) : gameStatus === "game" ? (
-      <GameScreen pokemonData={pokemonData} goalScore={goalScore} />
-    ) : null}
+      {isLoading ? (
+        <LoadingScreen />
+      ) : gameStatus === "home" ? (
+        <HomeScreen
+          handleGameStart={handleGameStart}
+        />
+      ) : gameStatus === "game" ? (
+        <GameScreen pokemonData={pokemonData} />
+      ) : null}
     </>
-  )
+  );
 }
 
 export default App;

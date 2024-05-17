@@ -1,21 +1,21 @@
 .card {
-    width: 140px;
-    height: 200px;
-    padding: 1rem;
-    background-color: #a7a7a774;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    justify-items: center;
-    align-items: center;
-    gap: 1rem;
-    border: none;
-    border-radius: 1rem;
-    cursor: pointer;
+  width: 140px;
+  height: 200px;
+  padding: 1rem;
+  background-color: #a7a7a774;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
 }
 .card:focus {
-    outline: none;
+  outline: none;
 }
 
 .card-title {
-    text-align: center;
+  text-align: center;
 }
