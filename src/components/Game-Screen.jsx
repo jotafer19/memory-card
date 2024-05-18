@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "./Card";
 import GameOverDisplay from "./Game-Over";
 import "../styles/Game-Screen.css";
 
-export default function GameScreen({ pokemonData, playAgain, handleGoHome }) {
-  const [showCards, setShowCards] = useState(pokemonData.slice(0, 5));
-  const [score, setScore] = useState(0);
-  const [isGameOver, setIsGameOver] = useState(false);
+export default function GameScreen({
+  pokemonData,
+  handleLoading,
+  handleCardClick,
+  handlePlayAgain,
+  handleGoHome,
+  difficultyMode,
+  score,
+  highScore,
+  isGameOver,
+}) {
+  const [showCards, setShowCards] = useState([]);
+
+  const cardsClicked = pokemonData.filter((pokemon) => pokemon.isClicked);
+
+  useEffect(() => {
+    if (isGameOver) return;
+    setShowCards(handleShowCards());
+  }, [pokemonData]);
 
   function handleShowCards() {
     const selectedCards = [];
@@ -25,52 +40,40 @@ export default function GameScreen({ pokemonData, playAgain, handleGoHome }) {
     }
 
     if (
-      selectedCards.every(selectedCard => selectedCard.isClicked) && availableCards.length > 0
+      selectedCards.every((selectedCard) => selectedCard.isClicked) &&
+      availableCards.length > 0
     ) {
       const randomIndex = Math.floor(Math.random() * selectedCards.length);
       selectedCards[randomIndex] =
         availableCards[Math.floor(Math.random() * availableCards.length)];
     }
 
-    setShowCards(selectedCards);
-  }
-
-  function handleGameOver(card) {
-    if (card.isClicked) {
-      setIsGameOver(true);
-    } else {
-      card.isClicked = true;
-      setScore((prevScore) => {
-        const updatedScore = prevScore + 1;
-        if (updatedScore === pokemonData.length) {
-          setIsGameOver(true)
-        }
-
-        return updatedScore;
-      }) 
-    }
+    return selectedCards;
   }
 
   return (
     <div className="game screen">
       <div className="score-container">
-        <p>Score: {score} | High Score:</p>
-        <p>{score + " / " + pokemonData.length}</p>
-        </div>
+        <p>Score: {score} | High Score: {highScore}</p>
+        <p>{cardsClicked.length + " / " + pokemonData.length}</p>
+      </div>
       <div className="cards-container">
         {showCards.map((pokemonCard) => (
           <Card
             key={pokemonCard.id}
             pokemon={pokemonCard}
-            onClick={() => {
-              if (isGameOver) return;
-              handleGameOver(pokemonCard)
-              handleShowCards();
-            }}
+            onClick={handleCardClick}
           />
         ))}
       </div>
-      {isGameOver && <GameOverDisplay pokemonData={pokemonData} score={score} playAgain={playAgain} handleGoHome={handleGoHome} />}
+      {isGameOver && (
+        <GameOverDisplay
+          pokemonData={pokemonData}
+          score={score}
+          handlePlayAgain={handlePlayAgain}
+          handleGoHome={handleGoHome}
+        />
+      )}
     </div>
   );
 }
