@@ -5,13 +5,20 @@ import LoadingScreen from "./Loading-Screen";
 import GameScreen from "./Game-Screen";
 
 function App() {
+  const allScores = {
+    easy: 0,
+    medium: 0,
+    hard: 0,
+    endless: 0
+  }
+
   const [pokemonData, setPokemonData] = useState(null);
   const [gameStatus, setGameStatus] = useState("home");
   const [isLoading, setIsLoading] = useState(false);
   const [difficultyMode, setDifficultyMode] = useState(null);
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [highScore, setHighScore] = useState(JSON.parse(localStorage.getItem("highScore")) || 0);
+  const [highScore, setHighScore] = useState(JSON.parse(localStorage.getItem("highScore")) || allScores);
 
   useEffect(() => {
     localStorage.setItem("highScore", JSON.stringify(highScore))
@@ -56,9 +63,9 @@ function App() {
 
   function handleIncrementScore() {
     const updateScore = score + 1;
-    const updateHighScore = Math.max(updateScore, highScore)
+    const updateHighScore = Math.max(updateScore, highScore[difficultyMode])
     setScore(updateScore);
-    setHighScore(updateHighScore)
+    setHighScore({ ...highScore,[difficultyMode]: updateHighScore })
   }
 
   function handleCardClick(event) {
@@ -109,6 +116,7 @@ function App() {
         <HomeScreen
           handleDifficultyMode={handleDifficultyMode}
           handleLoading={handleLoading}
+          highScore={highScore}
         />
       ) : gameStatus === "game" ? (
         <GameScreen
@@ -119,7 +127,7 @@ function App() {
           handleGoHome={handleGoHome}
           difficultyMode={difficultyMode}
           score={score}
-          highScore={highScore}
+          highScore={highScore[difficultyMode]}
           isGameOver={isGameOver}
         />
       ) : null}

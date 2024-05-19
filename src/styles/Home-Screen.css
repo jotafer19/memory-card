@@ -10,14 +10,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .difficulty-selector {
-  align-self: flex-start;
   display: flex;
   flex-direction: column;
   justify-self: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.mode-item {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 2rem;
 }
