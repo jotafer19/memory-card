@@ -7,6 +7,7 @@ export default function Card({ pokemon, onClick }) {
         <img
           src={pokemon.imageURL}
           alt={editName(pokemon.name) + " " + "sprite"}
+          draggable={false}
         />
       </div>
       <div className="card-title">{editName(pokemon.name)}</div>

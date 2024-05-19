@@ -54,8 +54,8 @@ export default function GameScreen({
   return (
     <div className="game screen">
       <div className="score-container">
-        <p>Score: {score} | High Score: {highScore}</p>
-        <p>{cardsClicked.length + " / " + pokemonData.length}</p>
+        <div className="score-data">Score: {score} | High Score: {highScore}</div>
+        <div className="progress-data">{cardsClicked.length + " / " + pokemonData.length}</div>
       </div>
       <div className="cards-container">
         {showCards.map((pokemonCard) => (

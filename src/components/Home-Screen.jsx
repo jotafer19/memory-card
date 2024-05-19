@@ -7,20 +7,22 @@ export default function HomeScreen({ handleDifficultyMode, handleLoading }) {
   }
   return (
     <div className="home screen">
-      <h1 className="title">Memory Game</h1>
-      <div className="difficulty-selector">
-        <button data-mode="easy" onClick={handleButtonClick}>
-          Easy
-        </button>
-        <button data-mode="medium" onClick={handleButtonClick}>
-          Medium
-        </button>
-        <button data-mode="hard" onClick={handleButtonClick}>
-          Hard
-        </button>
-        <button data-mode="endless" onClick={handleButtonClick}>
-          Endless
-        </button>
+      <div className="home-screen-container">
+        <h1 className="title">Memory Game</h1>
+        <div className="difficulty-selector">
+          <button className="btn mode-btn easy" data-mode="easy" onClick={handleButtonClick}>
+            Easy
+          </button>
+          <button className="btn mode-btn medium" data-mode="medium" onClick={handleButtonClick}>
+            Medium
+          </button>
+          <button className="btn mode-btn hard" data-mode="hard" onClick={handleButtonClick}>
+            Hard
+          </button>
+          <button className="btn mode-btn endless" data-mode="endless" onClick={handleButtonClick}>
+            Endless
+          </button>
+        </div>
       </div>
     </div>
   );

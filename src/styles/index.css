@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "Oxygen";
+  src: url("../../public/fonts/Oxygen-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Oxygen";
+  src: url("../../public/fonts/Oxygen-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Oxygen";
+  background-color: #fef3c7;
+}
+
+button {
+  font-family: "Oxygen";
+}
