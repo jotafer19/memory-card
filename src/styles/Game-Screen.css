@@ -1,7 +1,42 @@
 .game.screen {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.header {
+  width: 100vw;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container {
+  padding: .3rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.score-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+
+.score {
+  padding: .3rem;
+}
+
+.score.current-score {
+  padding-right: 1.5rem;
+}
+
+.score.high-score {
+  border-left: 2px solid black;
+  padding-left: 1.5rem;
 }
 
 .game-container {
@@ -12,23 +47,6 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
-}
-
-.score-container {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
-
-.score-data {
-  font-size: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
 }
 
 .cards-container {
@@ -42,5 +60,24 @@
 @media screen and (max-width: 550px) {
   .game.screen {
     height: auto;
+  }
+
+  .header {
+    padding: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .score-container {
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .score.high-score,
+  .score.current-score {
+    padding: 0;
+    border: none;
   }
 }

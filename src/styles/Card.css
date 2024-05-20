@@ -1,4 +1,5 @@
 .card {
+  padding: .5rem;
   width: 146px;
   height: 200px;
   cursor: pointer;
@@ -48,6 +49,7 @@
 
 .card-back {
   transform: rotateY(180deg);
+  background-color: #000000;
 }
 
 .card-back img {

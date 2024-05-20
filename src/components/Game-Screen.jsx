@@ -52,16 +52,19 @@ export default function GameScreen({
 
   return (
     <div className="game screen">
-      <div className="game-container">
+      <header className="header">
+        <div className="logo-container" onClick={handleGoHome}>
+          MEMORY GAME
+        </div>
         <div className="score-container">
-          <div className="score-data">
-            <span className="current-score score">Score: {score}</span>
-            <span className="high-score score">High Score: {highScore}</span>
+            <span className="current-score score">SCORE: {score}</span>
+            <span className="high-score score">HIGH SCORE: {highScore}</span>
           </div>
+      </header>
+      <div className="game-container">
           <div className="progress-data">
             {cardsClicked.length + " / " + pokemonData.length}
           </div>
-        </div>
         <div className="cards-container">
           {showCards.map((pokemonCard) => (
             <Card
