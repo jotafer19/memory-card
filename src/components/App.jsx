@@ -9,8 +9,8 @@ function App() {
     easy: 0,
     medium: 0,
     hard: 0,
-    endless: 0
-  }
+    endless: 0,
+  };
 
   const [pokemonData, setPokemonData] = useState(null);
   const [gameStatus, setGameStatus] = useState("home");
@@ -18,11 +18,18 @@ function App() {
   const [difficultyMode, setDifficultyMode] = useState(null);
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [highScore, setHighScore] = useState(JSON.parse(localStorage.getItem("highScore")) || allScores);
+  const [highScore, setHighScore] = useState(
+    JSON.parse(localStorage.getItem("highScore")) || allScores,
+  );
+  const [isFlipped, setIsFlipped] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("highScore", JSON.stringify(highScore))
-  }, [highScore])
+    localStorage.setItem("highScore", JSON.stringify(highScore));
+  }, [highScore]);
+
+  useEffect(() => {
+    checkGameOver(pokemonData);
+  }, [pokemonData]);
 
   function handleGoalScore() {
     if (difficultyMode === "endless") {
@@ -53,26 +60,51 @@ function App() {
   }
 
   function updateCardStatus(pokemonClicked) {
-    const updateData = [...pokemonData];
-    const cardIndex = updateData.findIndex(
-      (pokemon) => pokemon.id === pokemonClicked.id,
+    setPokemonData((prevData) =>
+      prevData.map((pokemon) =>
+        pokemon.id === pokemonClicked.id
+          ? { ...pokemon, isClicked: true }
+          : pokemon,
+      ),
     );
-    updateData[cardIndex].isClicked = true;
-    setPokemonData(updateData);
   }
 
   function handleIncrementScore() {
     const updateScore = score + 1;
-    const updateHighScore = Math.max(updateScore, highScore[difficultyMode])
+    const updateHighScore = Math.max(updateScore, highScore[difficultyMode]);
     setScore(updateScore);
-    setHighScore({ ...highScore,[difficultyMode]: updateHighScore })
+    setHighScore((prevHighScore) => ({
+      ...prevHighScore,
+      [difficultyMode]: updateHighScore,
+    }));
   }
 
-  function handleCardClick(event) {
-    const card = event.target.closest(".card");
+  function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
+  function checkGameOver(pokemonData) {
+    if (
+      pokemonData &&
+      pokemonData.every((pokemonCard) => pokemonCard.isClicked)
+    ) {
+      if (difficultyMode === "endless") {
+        setTimeout(() => setIsLoading(true), 600);
+      } else {
+        setIsGameOver(true);
+      }
+    } else {
+      setTimeout(() => setIsFlipped(false), 600);
+    }
+  }
+
+  async function handleCardClick(event) {
+    setIsFlipped(true);
+    await sleep(600);
+    const card = event.target.closest(".card-front");
     const cardID = Number(card.dataset.id);
     const pokemonClicked = pokemonData.filter(
-      (pokemon) => pokemon.id === cardID
+      (pokemon) => pokemon.id === cardID,
     )[0];
 
     if (pokemonClicked.isClicked) {
@@ -80,13 +112,6 @@ function App() {
     } else {
       updateCardStatus(pokemonClicked);
       handleIncrementScore();
-      if (pokemonData.every((pokemonCard) => pokemonCard.isClicked)) {
-        if (difficultyMode === "endless") {
-          setIsLoading(true);
-        } else {
-          setIsGameOver(true);
-        }
-      }
     }
   }
 
@@ -94,6 +119,8 @@ function App() {
     setIsGameOver(false);
     setIsLoading(true);
     setScore(0);
+    setIsFlipped(false);
+    setPokemonData(null);
   }
 
   function handleGoHome() {
@@ -101,6 +128,7 @@ function App() {
     setGameStatus("home");
     setScore(0);
     setPokemonData(null);
+    setIsFlipped(false);
   }
 
   return (
@@ -129,6 +157,8 @@ function App() {
           score={score}
           highScore={highScore[difficultyMode]}
           isGameOver={isGameOver}
+          isFlipped={isFlipped}
+          onClick={handleCardClick}
         />
       ) : null}
     </>

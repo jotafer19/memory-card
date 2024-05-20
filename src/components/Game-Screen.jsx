@@ -5,14 +5,13 @@ import "../styles/Game-Screen.css";
 
 export default function GameScreen({
   pokemonData,
-  handleLoading,
-  handleCardClick,
   handlePlayAgain,
   handleGoHome,
-  difficultyMode,
   score,
   highScore,
   isGameOver,
+  isFlipped,
+  onClick,
 }) {
   const [showCards, setShowCards] = useState([]);
 
@@ -53,23 +52,32 @@ export default function GameScreen({
 
   return (
     <div className="game screen">
-      <div className="score-container">
-        <div className="score-data">Score: {score} | High Score: {highScore}</div>
-        <div className="progress-data">{cardsClicked.length + " / " + pokemonData.length}</div>
+      <div className="game-container">
+        <div className="score-container">
+          <div className="score-data">
+            <span className="current-score score">Score: {score}</span>
+            <span className="high-score score">High Score: {highScore}</span>
+          </div>
+          <div className="progress-data">
+            {cardsClicked.length + " / " + pokemonData.length}
+          </div>
+        </div>
+        <div className="cards-container">
+          {showCards.map((pokemonCard) => (
+            <Card
+              key={pokemonCard.id}
+              pokemon={pokemonCard}
+              isFlipped={isFlipped}
+              onClick={onClick}
+            />
+          ))}
       </div>
-      <div className="cards-container">
-        {showCards.map((pokemonCard) => (
-          <Card
-            key={pokemonCard.id}
-            pokemon={pokemonCard}
-            onClick={handleCardClick}
-          />
-        ))}
       </div>
       {isGameOver && (
         <GameOverDisplay
           pokemonData={pokemonData}
           score={score}
+          highScore={highScore}
           handlePlayAgain={handlePlayAgain}
           handleGoHome={handleGoHome}
         />

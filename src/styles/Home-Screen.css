@@ -13,6 +13,11 @@
   gap: 3rem;
 }
 
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
 .difficulty-selector {
   display: flex;
   flex-direction: column;
@@ -30,16 +35,25 @@
 
 .mode-btn {
   align-self: flex-start;
-  width: 100px;
-  padding: .5rem 1.5rem;
+  width: 120px;
+  padding: 0.5rem 1.5rem;
   border: 3px dashed;
   cursor: pointer;
   font-weight: bold;
+  transition: transform .3s;
+}
+
+.mode-btn:hover {
+  transform: scale(1.05);
+}
+
+.mode-btn:active {
+  transform: scale(0.97);
 }
 
 .mode-btn.easy {
   border-color: #16a34a;
-  background-color: #dcfce7;
+  background-color: #dcfce7ad;
 }
 
 .mode-btn.medium {
@@ -55,4 +69,14 @@
 .mode-btn.endless {
   border-color: #581c87;
   background-color: #f3e8ff;
+}
+
+@media screen and (max-width: 550px) {
+  .home-screen-container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
 }
