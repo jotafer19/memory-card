@@ -18,7 +18,10 @@ export default function GameOverDisplay({
           <h3 className="message-high-score">High Score: {highScore}</h3>
         </div>
         <div className="options-container">
-          <button className="game-over play-again btn" onClick={handlePlayAgain}>
+          <button
+            className="game-over play-again btn"
+            onClick={handlePlayAgain}
+          >
             Play Again
           </button>
           <button className="game-over main-menu btn" onClick={handleGoHome}>

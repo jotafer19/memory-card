@@ -43,7 +43,7 @@
   cursor: pointer;
   font-weight: bold;
   border: 3px dashed;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .game-over.btn:hover {
@@ -51,7 +51,7 @@
 }
 
 .game-over.btn:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
 
 .btn.play-again {

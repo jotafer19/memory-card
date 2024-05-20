@@ -40,7 +40,7 @@
   border: 3px dashed;
   cursor: pointer;
   font-weight: bold;
-  transition: transform .3s;
+  transition: transform 0.3s;
 }
 
 .mode-btn:hover {

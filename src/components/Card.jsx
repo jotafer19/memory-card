@@ -3,23 +3,28 @@ import cardBack from "../assets/images/card-back.png";
 
 export default function Card({ pokemon, isFlipped, onClick }) {
   return (
-      <div className={`card ${isFlipped ? "flipped" : ""}`}>
-        <div className="card-inner">
-          <div className="card-front" data-id={pokemon.id} onClick={onClick}>
-            <div className="card-image">
-              <img
-                src={pokemon.imageURL}
-                alt={editName(pokemon.name) + " " + "sprite"}
-                draggable={false}
-              />
-            </div>
-            <div className="card-title">{editName(pokemon.name)}</div>
+    <div className={`card ${isFlipped ? "flipped" : ""}`}>
+      <div className="card-inner">
+        <div className="card-front" data-id={pokemon.id} onClick={onClick}>
+          <div className="card-image">
+            <img
+              src={pokemon.imageURL}
+              alt={editName(pokemon.name) + " " + "sprite"}
+              draggable={false}
+            />
           </div>
-          <div className="card-back">
-            <img src={cardBack} alt="Card back" className="card-back-image" draggable={false} />
-          </div>
+          <div className="card-title">{editName(pokemon.name)}</div>
+        </div>
+        <div className="card-back">
+          <img
+            src={cardBack}
+            alt="Card back"
+            className="card-back-image"
+            draggable={false}
+          />
         </div>
       </div>
+    </div>
   );
 }
 

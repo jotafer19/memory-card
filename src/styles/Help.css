@@ -1,0 +1,46 @@
+.help-container {
+  position: relative;
+  width: 100vw;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.help-message {
+  position: absolute;
+  right: 60px;
+  bottom: 0;
+  padding: 1rem;
+  border-radius: 1rem;
+  opacity: 0;
+  transform: translateY(0);
+  transition: all 1s ease-in-out;
+  background-color: #f59e0b;
+}
+
+.help-message.show {
+  opacity: 1;
+  transform: translateY(-120%);
+}
+
+.help-btn {
+  padding: 0.5rem;
+  background-color: #0284c7;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.help-btn:hover {
+  background-color: #0172ab;
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 550px) {
+  .help-message {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}

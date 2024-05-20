@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
 import GameOverDisplay from "./Game-Over";
+import Help from "./Help";
 import "../styles/Game-Screen.css";
 
 export default function GameScreen({
@@ -57,14 +58,14 @@ export default function GameScreen({
           MEMORY GAME
         </div>
         <div className="score-container">
-            <span className="current-score score">SCORE: {score}</span>
-            <span className="high-score score">HIGH SCORE: {highScore}</span>
-          </div>
+          <span className="current-score score">SCORE: {score}</span>
+          <span className="high-score score">HIGH SCORE: {highScore}</span>
+        </div>
       </header>
       <div className="game-container">
-          <div className="progress-data">
-            {cardsClicked.length + " / " + pokemonData.length}
-          </div>
+        <div className="progress-data">
+          {cardsClicked.length + " / " + pokemonData.length}
+        </div>
         <div className="cards-container">
           {showCards.map((pokemonCard) => (
             <Card
@@ -74,8 +75,9 @@ export default function GameScreen({
               onClick={onClick}
             />
           ))}
+        </div>
       </div>
-      </div>
+      <Help />
       {isGameOver && (
         <GameOverDisplay
           pokemonData={pokemonData}

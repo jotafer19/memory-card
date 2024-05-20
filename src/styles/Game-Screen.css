@@ -14,7 +14,7 @@
 }
 
 .logo-container {
-  padding: .3rem;
+  padding: 0.3rem;
   font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
@@ -24,10 +24,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
- }
+}
 
 .score {
-  padding: .3rem;
+  padding: 0.3rem;
 }
 
 .score.current-score {
